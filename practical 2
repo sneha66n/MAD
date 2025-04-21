@@ -1,0 +1,532 @@
+Pr-18
+Q1.implicit intent that displays a web page. activity_main.xml
+File: activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent" tools:context="example.javatpoint.com.implicitintent.MainActivity">
+
+<EditText android:id="@+id/editText"
+android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="8dp" android:layout_marginStart="8dp" android:layout_marginTop="60dp" android:ems="10" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.575" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" />
+
+<Button android:id="@+id/button"
+android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="8dp" android:layout_marginLeft="156dp" android:layout_marginTop="172dp" android:text="Visit" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.0" app:layout_constraintStart_toStartOf="parent"
+app:layout_constraintTop_toBottomOf="@+id/editText" />
+</android.support.constraint.ConstraintLayout>
+
+File: MainActivity.java
+package example.javatpoint.com.implicitintent;
+
+import android.content.Intent; import android.net.Uri;
+import android.support.v7.app.AppCompatActivity; import android.os.Bundle;
+import android.view.View; import android.widget.Button;
+ 
+import android.widget.EditText;
+public class MainActivity extends AppCompatActivity { Button button;
+EditText editText;
+
+@Override
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_main);
+
+button = findViewById(R.id.button); editText = findViewById(R.id.editText);
+
+button.setOnClickListener(new View.OnClickListener() { @Override
+public void onClick(View view) {
+String url=editText.getText().toString();
+Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse(url)); startActivity(intent);
+}
+});
+}
+}
+Output:
+ 
+Q2.Start Dialer App
+This app creates a "Start Dialer" button. When clicked, it will open the phone dialer.
+Java Code (MainActivity.java)
+package com.example.dialerapp;
+
+import android.content.Intent; import android.net.Uri; import android.os.Bundle; import android.view.View; import android.widget.Button;
+import androidx.appcompat.app.AppCompatActivity; public class MainActivity extends AppCompatActivity {
+@Override
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_main);
+Button dialButton = findViewById(R.id.dialButton); dialButton.setOnClickListener(new View.OnClickListener() {
+@Override
+public void onClick(View v) {
+Intent intent = new Intent(Intent.ACTION_DIAL); intent.setData(Uri.parse("tel:")); // Empty, user enters number manually startActivity(intent);
+}
+});
+}
+}
+XML Layout (activity_main.xml)
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent"
+android:gravity="center" android:orientation="vertical">
+
+<Button android:id="@+id/dialButton"
+android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Start Dialer" />
+</LinearLayout>
+ 
+Output:
+
+
+
+
+
+
+Ans 3) activity_main.xml
+<xml version=”1.0” encoding=”utf-8”?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=”http://schemas.android.com/apk/res/android” xmlns:app=”http://schemas.android.com/apk/res-auto” xmlns:tools=”http://schemas.android.com/tools” android:id=”@+id/relativeLayout” android:layout_width=”match_parent” android:layout_height=”match_parent” tools:context=”.MainActivity”>
+<EditText android:id=”@+id/editText” android:layout_width=”315dp” android:layout_height=”53dp”
+android:layout_centerHorizontal=”true” android:layout_centerVertical=”true” android:fontFamily=”@font/poppins_medium” android:hint=”Enter a number” android:inputType=”number”
+ 
+android:textSize=”20sp” app:layout_constraintBottom_toBottomOf=”parent” app:layout_constraintLeft_toLeftOf=”parent” app:layout_constraintRight_toRightOf=”parent” app:layout_constraintTop_toTopOf=”parent” app:layout_constraintVertical_bias=”0.371”/>
+
+<Button android:id=”@+id/btnFact” android:layout_width=”195dp” android:layout_height=”43dp” android:layout_marginTop=”84dp”
+android:fontFamily=”@font/poppins_medium” android:text=”Factorial” app:layout_constraintLeft_toLeftOf=”parent” app:layout_constraintRight_toRightOf=”parent” app:layout_constraintTop_toBottomOf=”@+id/editText”/>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+MainActivity.java
+
+package com.example.exp18_2;
+import androidx.appcompat.app.AppCompatActivity; import android.content.Intent;
+import android.os.Bundle; import android.view.View; import android.widget.Button; import android.widget.EditText;
+public class MainActivity extends AppCompatActivity
+{EditText editText; Button btnFact; int fact = 1;
+int num=0; @Override
+protected void onCreate(Bundle savedInstanceState)
+{super.onCreate(savedInstanceState); setContentView(R.layout.activity_main); editText = findViewById(R.id.editText); btnFact = findViewById(R.id.btnFact);
+btnFact.setOnClickListener(new View.OnClickListener()
+{@Override
+public void onClick(View v)
+{go();
+}
+
+});
+}
+
+public void go(){
+num = Integer.parseInt(editText.getText().toString().trim()); for(int i = 1; i <= num; i++){
+ 
+fact = fact * i;
+}
+
+navigate();
+}
+
+public void navigate(){
+Intent intent = new Intent(MainActivity.this,EmptyActivity.class); intent.putExtra(“Fact”,fact);
+intent.putExtra(“Num”,num); startActivity(intent);
+}
+
+}
+
+Outputs :
+
+ 
+Pr-25
+
+import android.app.Activity; import android.os.Bundle; import android.view.View;
+import android.view.animation.Animation; import android.view.animation.AnimationUtils; import android.widget.ImageView;
+import android.widget.Toast;
+public class MainActivity extends Activity { @Override
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_main);
+}
+public void clockwise(View view){
+ImageView image = (ImageView)findViewById(R.id.imageView);
+Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.clockwise);
+image.startAnimation(animation);
+}
+public void zoom(View view){
+ImageView image = (ImageView)findViewById(R.id.imageView);
+Animation animation1 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.Zoom);
+image.startAnimation(animation1);
+}
+public void fade(View view){
+ImageView image = (ImageView)findViewById(R.id.imageView); Animation animation1 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade);
+image.startAnimation(animation1);
+}
+public void blink(View view){
+ImageView image = (ImageView)findViewById(R.id.imageView); Animation animation1 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.blink); image.startAnimation(animation1);
+}
+public void move(View view){
+ImageView image = (ImageView)findViewById(R.id.imageView); Animation animation1 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.move); image.startAnimation(animation1);
+}
+public void slide(View view){
+ImageView image = (ImageView)findViewById(R.id.imageView); Animation animation1 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide); image.startAnimation(animation1);
+ 
+}
+}
+
+activity_main.xml.
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin" android:paddingRight="@dimen/activity_horizontal_margin" android:paddingTop="@dimen/activity_vertical_margin" android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
+<ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/imageView" android:src="@drawable/abc" android:layout_below="@+id/textView2" android:layout_alignRight="@+id/textView2" android:layout_alignEnd="@+id/textView2" android:layout_alignLeft="@+id/textView" android:layout_alignStart="@+id/textView"/>
+<Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="zoom" android:id="@+id/button" android:layout_below="@+id/imageView" android:layout_alignParentLeft="true" android:layout_alignParentStart="true" android:layout_marginTop="40dp" android:onClick="zoom "/>
+<Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="clockwise" android:id="@+id/button2" android:layout_alignTop="@+id/button" android:layout_centerHorizontal="true" android:onClick=" clockwise "/>
+<Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="fade" android:id="@+id/button3" android:layout_alignTop="@+id/button2" android:layout_alignParentRight="true" android:layout_alignParentEnd="true" android:onClick="fade"/>
+ 
+<Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="blink" android:onClick="blink" android:id="@+id/button4" android:layout_below="@+id/button" android:layout_alignParentLeft="true" android:layout_alignParentStart="true" />
+<Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="move" android:onClick="move" android:id="@+id/button5" android:layout_below="@+id/button2" android:layout_alignRight="@+id/button2" android:layout_alignEnd="@+id/button2" android:layout_alignLeft="@+id/button2" android:layout_alignStart="@+id/button2" />
+<Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="slide" android:onClick="slide" android:id="@+id/button6" android:layout_below="@+id/button3" android:layout_toRightOf="@+id/textView"
+android:layout_toEndOf="@+id/textView" />
+</RelativeLayout>
+
+
+Outputs:
+ 
+ 
+ 
+Pr-27
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent"
+android:orientation="vertical" android:padding="20dp" android:gravity="center">
+
+<EditText android:id="@+id/username"
+android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Username" android:padding="10dp"
+android:background="@android:drawable/editbox_background" android:inputType="text"/>
+
+<EditText android:id="@+id/password"
+android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Password" android:padding="10dp"
+android:background="@android:drawable/editbox_background" android:inputType="textPassword" android:layout_marginTop="10dp"/>
+
+<Button android:id="@+id/loginButton"
+android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Login" android:layout_marginTop="20dp"
+android:backgroundTint="@android:color/holo_blue_dark" android:textColor="@android:color/white"/>
+
+</LinearLayout>
+package com.example.loginapp;
+
+import android.os.Bundle; import android.view.View; import android.widget.Button; import android.widget.EditText; import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity { EditText username, password;
+Button loginButton;
+ 
+@Override
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_main);
+
+username = findViewById(R.id.username); password = findViewById(R.id.password); loginButton = findViewById(R.id.loginButton);
+
+loginButton.setOnClickListener(new View.OnClickListener() { @Override
+public void onClick(View v) {
+String user = username.getText().toString().trim(); String pass = password.getText().toString().trim();
+
+if (user.equals("admin") && pass.equals("1234")) {
+Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+} else {
+Toast.makeText(MainActivity.this, "Login Unsuccessful", Toast.LENGTH_SHORT).show();
+}
+}
+});
+}
+}
+OutPuts :
+
+ 
+Pr-28:
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent"
+android:orientation="vertical" android:padding="20dp" android:gravity="center">
+
+<EditText android:id="@+id/username"
+android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Enter Username" android:padding="10dp"
+android:background="@android:drawable/editbox_background" android:inputType="text"/>
+
+<EditText android:id="@+id/password"
+android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Enter Password" android:padding="10dp"
+android:background="@android:drawable/editbox_background" android:inputType="textPassword" android:layout_marginTop="10dp"/>
+
+<Button android:id="@+id/loginButton"
+android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Login" android:layout_marginTop="20dp"
+android:backgroundTint="@android:color/holo_blue_dark" android:textColor="@android:color/white"/>
+
+<TextView android:id="@+id/attemptsLeft" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Attempts left: 3" android:textSize="16sp" android:layout_marginTop="10dp"
+android:textColor="@android:color/holo_red_dark"/>
+
+</LinearLayout>
+ 
+package com.example.loginvalidation;
+
+import android.os.Bundle; import android.view.View; import android.widget.Button; import android.widget.EditText; import android.widget.TextView; import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity { EditText username, password;
+Button loginButton; TextView attemptsLeft;
+int attempts = 3; // Max login attempts allowed
+
+@Override
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_main);
+
+username = findViewById(R.id.username); password = findViewById(R.id.password); loginButton = findViewById(R.id.loginButton); attemptsLeft = findViewById(R.id.attemptsLeft);
+
+loginButton.setOnClickListener(new View.OnClickListener() { @Override
+public void onClick(View v) { validateLogin();
+}
+});
+}
+
+private void validateLogin() {
+String user = username.getText().toString().trim(); String pass = password.getText().toString().trim();
+
+// Check for empty fields
+if (user.isEmpty() || pass.isEmpty()) {
+Toast.makeText(this, "Fields cannot be empty!", Toast.LENGTH_SHORT).show(); return;
+}
+
+// Username length validation if (user.length() < 4) {
+Toast.makeText(this, "Username must be at least 4 characters!", Toast.LENGTH_SHORT).show();
+return;
+}
+ 
+// Password length validation if (pass.length() < 6) {
+Toast.makeText(this, "Password must be at least 6 characters!", Toast.LENGTH_SHORT).show();
+return;
+}
+
+// Hardcoded valid credentials
+if (user.equals("admin") && pass.equals("123456")) {
+Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show(); attempts = 3; // Reset attempts on success
+attemptsLeft.setText("Attempts left: 3");
+} else {
+attempts--;
+if (attempts == 0) { loginButton.setEnabled(false);
+Toast.makeText(this, "Account Locked! Too many failed attempts.", Toast.LENGTH_LONG).show();
+} else {
+Toast.makeText(this, "Login Unsuccessful! Attempts left: " + attempts, Toast.LENGTH_SHORT).show();
+attemptsLeft.setText("Attempts left: " + attempts);
+}
+}
+}
+}
+
+Outputs :
+
+ 
+
+ 
+Pr-29
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent"
+android:orientation="vertical" android:padding="20dp">
+
+<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Android SMS" android:textSize="20sp" android:textStyle="bold" android:layout_gravity="center"/>
+
+<EditText android:id="@+id/phoneNumber" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Phone Number" android:inputType="phone" android:padding="10dp" android:layout_marginTop="10dp"/>
+
+<EditText android:id="@+id/smsMessage" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="SMS Message" android:inputType="text" android:padding="10dp" android:layout_marginTop="10dp"/>
+
+<Button android:id="@+id/sendSmsButton" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Send SMS" android:layout_marginTop="20dp"
+android:backgroundTint="@android:color/holo_blue_dark" android:textColor="@android:color/white"/>
+
+</LinearLayout>
+ 
+package com.example.sendsms;
+
+import android.Manifest;
+import android.content.pm.PackageManager; import android.os.Bundle;
+import android.telephony.SmsManager; import android.view.View;
+import android.widget.Button; import android.widget.EditText; import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity; import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+public class MainActivity extends AppCompatActivity { EditText phoneNumber, smsMessage;
+Button sendSmsButton;
+private static final int SMS_PERMISSION_REQUEST_CODE = 1;
+
+@Override
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_main);
+
+phoneNumber = findViewById(R.id.phoneNumber); smsMessage = findViewById(R.id.smsMessage); sendSmsButton = findViewById(R.id.sendSmsButton);
+
+sendSmsButton.setOnClickListener(new View.OnClickListener() { @Override
+public void onClick(View v) { sendSMS();
+}
+});
+
+// Request SMS permission if not granted
+if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, SMS_PERMISSION_REQUEST_CODE);
+}
+}
+
+private void sendSMS() {
+String phone = phoneNumber.getText().toString().trim(); String message = smsMessage.getText().toString().trim();
+
+if (phone.isEmpty() || message.isEmpty()) {
+Toast.makeText(this, "Please enter phone number and message", Toast.LENGTH_SHORT).show();
+return;
+ 
+}
+
+try {
+SmsManager smsManager = SmsManager.getDefault(); smsManager.sendTextMessage(phone, null, message, null, null); Toast.makeText(this, "SMS Sent Successfully!", Toast.LENGTH_SHORT).show();
+} catch (Exception e) {
+Toast.makeText(this, "SMS Sending Failed!", Toast.LENGTH_SHORT).show(); e.printStackTrace();
+}
+}
+}
+
+Output:
+
+ 
+
+ 
+Pr-30
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent"
+android:paddingLeft="20dp" android:paddingRight="20dp" android:orientation="vertical" >
+<EditText android:id="@+id/txtTo"
+android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="To"/>
+<EditText android:id="@+id/txtSub"
+android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Subject"/>
+<EditText android:id="@+id/txtMsg"
+android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:gravity="top" android:hint="Message"/>
+<Button android:layout_width="100dp"
+android:layout_height="wrap_content" android:layout_gravity="right" android:text="Send" android:id="@+id/btnSend"/>
+</LinearLayout>
+
+package com.tutlane.sendmailexample; import android.content.Intent;
+import android.support.v7.app.AppCompatActivity; import android.os.Bundle;
+import android.view.View; import android.widget.Button; import android.widget.EditText;
+public class MainActivity extends AppCompatActivity { private EditText eTo;
+private EditText eSubject;
+private EditText eMsg; private Button btn; @Override
+protected void onCreate(Bundle savedInstanceState) {
+ 
+super.onCreate(savedInstanceState); setContentView(R.layout.activity_main); eTo = (EditText)findViewById(R.id.txtTo);
+eSubject = (EditText)findViewById(R.id.txtSub); eMsg = (EditText)findViewById(R.id.txtMsg); btn = (Button)findViewById(R.id.btnSend);
+btn.setOnClickListener(new View.OnClickListener() { @Override
+public void onClick(View v) {
+Intent it = new Intent(Intent.ACTION_SEND); it.putExtra(Intent.EXTRA_EMAIL, new String[]{eTo.getText().toString()}); it.putExtra(Intent.EXTRA_SUBJECT,eSubject.getText().toString()); it.putExtra(Intent.EXTRA_TEXT,eMsg.getText()); it.setType("message/rfc822"); startActivity(Intent.createChooser(it,"Choose Mail App"));
+}
+});
+}
+}
+AndroidManifest.xml
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.tutlane.send mailexample">
+<application android:allowBackup="true" android:icon="@mipmap/ic_launcher" android:label="@string/app_name"
+android:roundIcon="@mipmap/ic_launcher_round" android:supportsRtl="true" android:theme="@style/AppTheme">
+<activity android:name=".MainActivity">
+<intent-filter>
+<action android:name="android.intent.action.MAIN" />
+<category android:name="android.intent.category.LAUNCHER" />
+<action android:name="android.intent.action.SEND"/>
+<category android:name="android.intent.category.DEFAULT"/>
+<data android:mimeType="message/rfc822"/>
+</intent-filter>
+</activity>
+</application>
+</manifest>
+ 
+r-31
+
+1. Write a program to locate user’s current location.
+Java
+package com.example.maps1;
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.FragmentActivity;
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.graphics.Color; import android.location.Geocoder; import android.location.Location; import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices; import com.google.android.gms.maps.CameraUpdateFactory; import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback; import com.google.android.gms.maps.SupportMapFragment; import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+public class MapsActivity extends FragmentActivity implements
+OnMapReadyCallback {
+private GoogleMap mMap; Geocoder geocoder;
+public void onRequestPermissionsResult(int requestCode,@NonNull String[] permissions, @NonNull int[] grantResults)
+{
+super.onRequestPermissionsResult(requestCode, permissions,grantResults); if (requestCode == 101) {
+// Checking whether user granted the permission or not.
+if (grantResults.length > 0 && grantResults[0] ==PackageManager.PERMISSION_GRANTED)
+{
+// Showing the toast message
+Toast.makeText(this, "Location Permission Granted",Toast.LENGTH_SHORT).show();
+}
+else {
+Toast.makeText(this, "LocationCamera Permission Denied",Toast.LENGTH_SHORT).show();
+}}}
+@Override
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_maps);
+// Obtain the SupportMapFragment and get notified when the map is ready to be used.
+ 
+SupportMapFragment mapFragment = (SupportMapFragment)getSupportFragmentManager()
+.findFragmentById(R.id.map); mapFragment.getMapAsync(this);
+}
+@Override
+public void onMapReady(GoogleMap googleMap) {
+mMap = googleMap;
+mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+if (ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+{
+ActivityCompat.requestPermissions(this, new String[]
+{ Manifest.permission.ACCESS_FINE_LOCATION }, 101);
+return;
+} //Enable Current Location
+mMap.setMyLocationEnabled(true);
+//settings
+UiSettings mapUI= googleMap.getUiSettings(); mapUI.setAllGesturesEnabled(true); mapUI.setMyLocationButtonEnabled(true); mapUI.setCompassEnabled(true);
+}}
+
+Outputs :
+
+ 
+Pr-32
+
+Que – Write a program to draw a route between two locations. activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent"
+tools:context=".MainActivity" android:orientation="vertical" android:layout_margin="20dp">
+<EditText android:layout_marginTop="40dp" android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/et_source" android:hint="Enter Source Location" android:padding="13dp" android:background="@drawable/input"/>
+<EditText android:layout_marginTop="40dp" android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/et_destination" android:hint="Enter Destination Location" android:padding="13dp" android:background="@drawable/input"/>
+<Button android:layout_marginTop="40dp" android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/track" android:text="Draw Route"/>
+</LinearLayout>
+MainActivity.java
+package co6i.micro.project.shantanu.practical32; import androidx.appcompat.app.AppCompatActivity; import android.content.ActivityNotFoundException; import android.content.Intent;
+import android.net.Uri; import android.os.Bundle; import android.view.View; import android.widget.Button;
+import android.widget.EditText; import android.widget.Toast;
+public class MainActivity extends AppCompatActivity { EditText source, destination;
+Button track;
+ 
+@Override
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState);
+setContentView(R.layout.activity_main); source = findViewById(R.id.et_source);
+destination = findViewById(R.id.et_destination); track = findViewById(R.id.track);
+track.setOnClickListener(new View.OnClickListener() { @Override
+public void onClick(View v) {
+String sSource = source.getText().toString();
+String sDestination = destination.getText().toString(); if(sSource.equals("") && sDestination.equals("")){ Toast.makeText(MainActivity.this,"Enter Both Location",Toast.LENGTH_SHORT).show();
+}
+else{
+DisplayTrack(sSource,sDestination);
+}
+}
+});
+}
+private void DisplayTrack(String sSource, String sDestination) { try {
+Uri uri =
+Uri.parse("https://www.google.co.in/maps/dir/"+sSource+"/"+sDestination); Intent intent = new Intent(Intent.ACTION_VIEW,uri);
+intent.setPackage("com.google.android.apps.maps"); intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+// This Flag Only Starts an Activity in a new Task If it's not previously started
+startActivity(intent);
+}
+catch (ActivityNotFoundException e){ Uri uri =
+Uri.parse("https://play.google.com/store/apps/details?id=com.google.android.apps
+.maps");
+Intent intent = new Intent(Intent.ACTION_VIEW,uri); intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); startActivity(intent);
+}
+}
+}
+OUTPUT:
+ 
+ 
